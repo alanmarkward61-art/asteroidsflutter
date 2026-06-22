@@ -91,6 +91,13 @@ class _IntroOverlayState extends State<IntroOverlay> {
               },
               child: const Text("Reset High Score", style: TextStyle(color: Colors.redAccent, fontFamily: 'Courier')),
             ),
+            const SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                SystemNavigator.pop();
+              },
+              child: const Text("Quit Game", style: TextStyle(color: Colors.grey, fontFamily: 'Courier')),
+            ),
           ],
         ),
       ),
@@ -208,6 +215,13 @@ class GameOverOverlay extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
                 child: Text("PLAY AGAIN", style: TextStyle(color: Colors.cyan, fontSize: 20, fontFamily: 'Courier')),
               ),
+            ),
+            const SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                SystemNavigator.pop();
+              },
+              child: const Text("Quit Game", style: TextStyle(color: Colors.grey, fontFamily: 'Courier')),
             ),
           ],
         ),

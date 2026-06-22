@@ -10,6 +10,7 @@ class Asteroid extends PositionComponent with CollisionCallbacks, HasGameRef<Ast
   final AsteroidSize sizeType;
   Vector2 velocity = Vector2.zero();
   double rotationalSpeed = 0;
+  bool isDestroyed = false;
   
   late Path polygonPath;
 
@@ -84,25 +85,18 @@ class Asteroid extends PositionComponent with CollisionCallbacks, HasGameRef<Ast
   void render(Canvas canvas) {
     super.render(canvas);
 
-    final paint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0;
-
-    Color glowColor;
+    Color strokeColor;
     switch (sizeType) {
-      case AsteroidSize.large: glowColor = Colors.white; break;
-      case AsteroidSize.medium: glowColor = Colors.cyan; break;
-      case AsteroidSize.small: glowColor = Colors.purpleAccent; break;
+      case AsteroidSize.large: strokeColor = Colors.white; break;
+      case AsteroidSize.medium: strokeColor = Colors.cyan; break;
+      case AsteroidSize.small: strokeColor = Colors.purpleAccent; break;
     }
 
-    final glowPaint = Paint()
-      ..color = glowColor.withOpacity(0.5)
+    final paint = Paint()
+      ..color = strokeColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 6.0
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3.0);
+      ..strokeWidth = 3.0; // Crisp thick vector lines instead of blurry glow
 
-    canvas.drawPath(polygonPath, glowPaint);
     canvas.drawPath(polygonPath, paint);
   }
 }

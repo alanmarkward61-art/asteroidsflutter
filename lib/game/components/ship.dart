@@ -9,8 +9,8 @@ import 'bullet.dart';
 
 class Ship extends PositionComponent with CollisionCallbacks, HasGameRef<AsteroidsGame> {
   static const double rotationSpeed = 3.0; // Radians per second
-  static const double thrustPower = 200.0;
-  static const double drag = 0.98; // Friction/Inertia decay
+  static const double thrustPower = 450.0;
+  static const double drag = 0.992; // Friction/Inertia decay
   static const double maxSpeed = 400.0;
 
   Vector2 velocity = Vector2.zero();

@@ -50,7 +50,8 @@ class Bullet extends PositionComponent with CollisionCallbacks, HasGameRef<Aster
   @override
   void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
-    if (other is Asteroid) {
+    if (other is Asteroid && !other.isDestroyed) {
+      other.isDestroyed = true;
       removeFromParent();
       other.removeFromParent();
       gameRef.onAsteroidDestroyed(other);
