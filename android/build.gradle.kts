@@ -1,5 +1,13 @@
 allprojects {
     repositories {
+        maven {
+            url = uri("http://dl.google.com/dl/android/maven2/")
+            isAllowInsecureProtocol = true
+        }
+        maven {
+            url = uri("http://repo.maven.apache.org/maven2")
+            isAllowInsecureProtocol = true
+        }
         google()
         mavenCentral()
     }

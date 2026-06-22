@@ -2,8 +2,7 @@ name: asteroids
 description: "A new Flutter project."
 publish_to: 'none'
 version: 0.1.0+1
-
-environment:
+environment:
   sdk: ^3.11.0
 
 dependencies:
@@ -11,7 +10,6 @@ dependencies:
   flame_audio: ^2.12.1
   flutter:
     sdk: flutter
-
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1

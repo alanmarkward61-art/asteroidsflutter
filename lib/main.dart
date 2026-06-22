@@ -22,6 +22,9 @@ void main() async {
         body: GameWidget(
           game: AsteroidsGame(),
           overlayBuilderMap: {
+            'Intro': (context, AsteroidsGame game) {
+              return IntroOverlay(game: game);
+            },
             'Controls': (context, AsteroidsGame game) {
               return ControlsOverlay(game: game);
             },
@@ -33,6 +36,66 @@ void main() async {
       ),
     ),
   );
+}
+
+class IntroOverlay extends StatefulWidget {
+  final AsteroidsGame game;
+  const IntroOverlay({Key? key, required this.game}) : super(key: key);
+
+  @override
+  State<IntroOverlay> createState() => _IntroOverlayState();
+}
+
+class _IntroOverlayState extends State<IntroOverlay> {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.all(40),
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.8),
+          border: Border.all(color: Colors.cyan, width: 2),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              "ASTEROIDS",
+              style: TextStyle(color: Colors.cyan, fontSize: 64, fontFamily: 'Courier', fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              "HIGH SCORE: ${widget.game.highScore}",
+              style: const TextStyle(color: Colors.yellowAccent, fontSize: 28, fontFamily: 'Courier'),
+            ),
+            const SizedBox(height: 40),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                side: const BorderSide(color: Colors.cyan, width: 2),
+              ),
+              onPressed: () {
+                widget.game.startGame();
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+                child: Text("START GAME", style: TextStyle(color: Colors.cyan, fontSize: 24, fontFamily: 'Courier')),
+              ),
+            ),
+            const SizedBox(height: 20),
+            TextButton(
+              onPressed: () {
+                widget.game.resetHighScore();
+                setState(() {});
+              },
+              child: const Text("Reset High Score", style: TextStyle(color: Colors.redAccent, fontFamily: 'Courier')),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class ControlsOverlay extends StatelessWidget {
@@ -101,6 +164,8 @@ class GameOverOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool newHighScore = game.score > 0 && game.score == game.highScore;
+
     return Center(
       child: Container(
         padding: const EdgeInsets.all(32),
@@ -117,9 +182,18 @@ class GameOverOverlay extends StatelessWidget {
               style: TextStyle(color: Colors.redAccent, fontSize: 48, fontFamily: 'Courier', fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
+            if (newHighScore)
+              const Text(
+                "NEW HIGH SCORE!",
+                style: TextStyle(color: Colors.yellowAccent, fontSize: 24, fontFamily: 'Courier', fontWeight: FontWeight.bold),
+              ),
             Text(
               "Score: ${game.score}",
               style: const TextStyle(color: Colors.white, fontSize: 24, fontFamily: 'Courier'),
+            ),
+            Text(
+              "High Score: ${game.highScore}",
+              style: const TextStyle(color: Colors.white70, fontSize: 20, fontFamily: 'Courier'),
             ),
             const SizedBox(height: 30),
             ElevatedButton(
